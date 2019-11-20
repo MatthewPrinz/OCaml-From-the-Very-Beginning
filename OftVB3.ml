@@ -7,8 +7,9 @@ let not boolean =
 
 let rec sumints n = 
   match n with 
-    1 -> 1
-  | _ -> sumints(n-1)
+    0 -> 0
+  |  1 -> 1
+  | _ -> n+sumints(n-1)
 
 (* Assuming compute "xn" means to compute their product *)
 let rec xn x n =
