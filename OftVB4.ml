@@ -39,14 +39,21 @@ let rec even_elements l =
   | _::h::t -> h :: even_elements t 
 
 (* type bool list -> int -> int *)
-let rec count_true l n = 
+let rec count_true_inner_tail_recursive l n = 
   match l with
     [] -> 0
-  | [true] -> (n+1)
+  | [true] -> n+1
   | [false] -> n
-  | h::t -> 
+  | h::t -> if h then count_true_inner_tail_recursive t (n+1) else count_true_inner_tail_recursive t n 
 
+let count_true l = count_true_inner_tail_recursive l 0
 
-
+(* type bool list -> int *)
+let rec count_true_inner l =
+  match l with 
+    [] -> 0
+  | [true] -> 1
+  | [false] -> 0
+  | h::t -> if h then 1 + count_true_inner t else count_true_inner t
 
 
