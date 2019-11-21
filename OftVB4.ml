@@ -15,13 +15,13 @@
     [] -> 0 
    | h::t -> h + sum_rec l *)
 
-(* let rec length_inner l n = 
-   match l with 
+let rec length_inner l n = 
+  match l with 
     [] -> n
-   | h::t -> length_inner t (n+1)
+  | h::t -> length_inner t (n+1)
 
-   let length l = 
-   length_inner l 0 *)
+let length l = 
+  length_inner l 0
 
 let rec sum_inner l n = 
   match l with
@@ -46,14 +46,57 @@ let rec count_true_inner_tail_recursive l n =
   | [false] -> n
   | h::t -> if h then count_true_inner_tail_recursive t (n+1) else count_true_inner_tail_recursive t n 
 
-let count_true l = count_true_inner_tail_recursive l 0
+let count_true_tail_recursive l = count_true_inner_tail_recursive l 0
 
 (* type bool list -> int *)
-let rec count_true_inner l =
+let rec count_true l =
   match l with 
     [] -> 0
   | [true] -> 1
   | [false] -> 0
-  | h::t -> if h then 1 + count_true_inner t else count_true_inner t
+  | h::t -> if h then 1 + count_true t else count_true t
 
+let rec rev l = 
+  match l with 
+    [] -> []
+  | h::t -> rev t @ [h]
 
+let rec build_palindrome l =
+  match l with
+    [] -> []
+  | [u] -> [u]
+  | h::t -> l @ rev l 
+
+let rec drop_last l = 
+  match l with 
+    [] -> []
+  | [u] -> []
+  | h::t -> [h] @ drop_last t
+
+let rec drop_last_tail_recursive_inner l l2 = 
+  match l with
+    [] -> []
+  | h::t -> drop_last_tail_recursive_inner t [h] @ l2
+
+let drop_last_tail_recursive list = 
+  rev(drop_last_tail_recursive_inner list [])
+
+let rec is_palindrome list = 
+  match list with
+    [] -> true
+  | [u] -> true
+  | [a; b] -> if a <> b then false else true
+  | _::t -> is_palindrome(drop_last t)
+
+let rec member ele list = 
+  match list with 
+    [] -> false
+  | h::t -> if h = ele then true else member ele t
+
+let rec make_set_inner l set = 
+  match l with
+    [] -> set
+  | [a] -> if member a set then set else make_set_inner [] set
+  | a::t -> if member a set then make_set_inner t set else make_set_inner t [a]@set
+
+let make_set l = make_set_inner l [];
