@@ -96,7 +96,9 @@ let rec member ele list =
 let rec make_set_inner l set = 
   match l with
     [] -> set
-  | [a] -> if member a set then set else make_set_inner [] set
-  | a::t -> if member a set then make_set_inner t set else make_set_inner t [a]@set
+  | h::t -> 
+    if not (member h set)
+    then make_set_inner t ([h]@set) 
+    else make_set_inner t set
 
 let make_set l = make_set_inner l [];

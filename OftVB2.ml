@@ -4,10 +4,10 @@ let nonzeros x y =
   if x <> 0 && y <> 0 
   then true 
   else false
-let rec plussum n = 
+let rec sumints n = 
   if n = 1 
   then 1 
-  else  n + plussum(n-1)
+  else  n + sumints(n-1)
 let rec power x n =
   if n = 0
   then 1
