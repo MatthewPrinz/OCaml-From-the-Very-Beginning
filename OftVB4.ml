@@ -1,4 +1,5 @@
-(*Chapter 4 *)
+(*Chapter 4: Making Lists *)
+
 (* Some test work here, this chapter was confusing. *)
 (* let rec length l =
    match l with 
@@ -44,7 +45,8 @@ let rec count_true_inner_tail_recursive l n =
     [] -> 0
   | [true] -> n+1
   | [false] -> n
-  | h::t -> if h then count_true_inner_tail_recursive t (n+1) else count_true_inner_tail_recursive t n 
+  | h::t -> if h then count_true_inner_tail_recursive t (n+1) 
+    else count_true_inner_tail_recursive t n 
 
 let count_true_tail_recursive l = count_true_inner_tail_recursive l 0
 
@@ -71,12 +73,12 @@ let rec drop_last l =
   match l with 
     [] -> []
   | [u] -> []
-  | h::t -> h :: drop_last t
+  | h::t -> h::drop_last t
 
 let rec drop_last_tail_recursive_inner l l2 = 
   match l with
     [] -> []
-  | h::t -> drop_last_tail_recursive_inner t (h :: l2)
+  | h::t -> drop_last_tail_recursive_inner t (h::l2)
 
 let drop_last_tail_recursive list = 
   rev(drop_last_tail_recursive_inner list [])
@@ -102,8 +104,3 @@ let rec make_set_inner l set =
     else make_set_inner t set
 
 let make_set l = make_set_inner l [];
-
-  (* The last question makes inquiries into using O(N) space for a method that 
-     reverses a list, which isn't ideal. After some internet searching, an easy 
-     reverse algorithm that takes  < O(N) time hasn't been found.
-  *)
