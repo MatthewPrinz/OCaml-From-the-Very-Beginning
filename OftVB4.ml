@@ -71,12 +71,12 @@ let rec drop_last l =
   match l with 
     [] -> []
   | [u] -> []
-  | h::t -> [h] @ drop_last t
+  | h::t -> h :: drop_last t
 
 let rec drop_last_tail_recursive_inner l l2 = 
   match l with
     [] -> []
-  | h::t -> drop_last_tail_recursive_inner t [h] @ l2
+  | h::t -> drop_last_tail_recursive_inner t (h :: l2)
 
 let drop_last_tail_recursive list = 
   rev(drop_last_tail_recursive_inner list [])
@@ -98,7 +98,12 @@ let rec make_set_inner l set =
     [] -> set
   | h::t -> 
     if not (member h set)
-    then make_set_inner t ([h]@set) 
+    then make_set_inner t (h::set) 
     else make_set_inner t set
 
 let make_set l = make_set_inner l [];
+
+  (* The last question makes inquiries into using O(N) space for a method that 
+     reverses a list, which isn't ideal. After some internet searching, an easy 
+     reverse algorithm that takes  < O(N) time hasn't been found.
+  *)
