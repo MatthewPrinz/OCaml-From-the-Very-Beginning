@@ -14,7 +14,7 @@ let rec drop n l =
     | _::t -> drop (n-1) t
 
 let rec take n l =
-  if n= 0 then l else
+  if n = 0 then [] else
     match l with
       [] -> []
     | h::t -> h :: take (n-1) t
@@ -82,19 +82,25 @@ let rec is_sorted list =
   | h::m::t -> 
     if h < m then is_sorted (m::t) else false
 
+(* 5. Comparison functions on lists compare element by element until they find
+   the first difference. For the first difference, the boolean value of 
+   that result will be used for the entire list. If the elements are equal but the lists
+   have separate lengths, the longer list will be > than the shorter.  So, [1; 2] 
+   < [2; 3] would return true. So, the following char_list_list will sort like so:
+   ['o'; 'n'; 'e']; ['t'; 'h'; 'r'; 'e'; 'e']; ['t'; 'w'; 'o']) because the 'o' < 
+   't' and 'h' < 'w'. *)
 
-let rec insert x l = 
-  match l with 
-    [] -> [x]
-  | h::t -> 
-    if x <= h then 
-      x :: h :: t
-    else 
-      h :: insert x t
-
-let rec insertion_sort_one_func l = 
-  match l with 
+(* Will admit, I looked at the hints for this one. *)
+let rec insertion_sort_one_func unsorted_list = 
+  match unsorted_list with 
     [] -> []
-  | h::t -> 
-
-
+  | x::l -> 
+    let rec insert x l = 
+      match l with 
+        [] -> [x]
+      | h::t -> 
+        if x <= h then 
+          x :: h :: t
+        else 
+          h :: insert x t in
+    insert x (insertion_sort_one_func l)
